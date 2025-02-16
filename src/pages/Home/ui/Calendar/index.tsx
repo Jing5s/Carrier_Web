@@ -8,20 +8,17 @@ import {
   EventClickArg,
   CalendarApi,
 } from '@fullcalendar/core';
+import { EventImpl } from '@fullcalendar/core/internal';
 import { Arrow } from 'shared/icons';
-import {
-  CalendarPlus,
-  CalendarSearch,
-  CalendarModal,
-  CalendarToggle,
-} from './ui';
+import { CalendarPlusIcon, CalendarSearchIcon } from 'features/Home/ui';
+import { CalendarModal, CalendarToggle } from 'features/Home/Calendar';
 import { events } from 'entities/calendar/model';
 import { Schedule, CalendarEvent } from 'entities/calendar/type';
 import * as s from './style.css';
 import './root.css';
 import theme from 'shared/styles/theme.css';
 
-const EventContent = memo(({ event }: { event: any }) => {
+const EventContent = memo(({ event }: { event: EventImpl }) => {
   const isSchedule = event.extendedProps.type === 'Schedule';
   return (
     <div
@@ -151,7 +148,7 @@ const Calendar = () => {
       <div className={s.calendarHeaderContainer}>
         <div className={s.calendarHeaderMain}>
           <div className={s.calendarHeaderPlusBtn} onClick={toggleCalendar}>
-            <CalendarPlus />
+            <CalendarPlusIcon />
             {isToggleVisible && (
               <CalendarToggle onModalOpen={handleModalOpen} />
             )}
@@ -184,7 +181,7 @@ const Calendar = () => {
           </div>
         </div>
         <div className={s.calendarSearchBar}>
-          <CalendarSearch />
+          <CalendarSearchIcon />
           <input className={s.calendarSearchText} placeholder="검색" />
         </div>
       </div>

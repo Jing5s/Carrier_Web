@@ -1,0 +1,10 @@
+export { default as Business } from './Business';
+export { default as Recieved } from './Recieved';
+export { default as Save } from './Save';
+export { default as Sent } from './Sent';
+export { default as Spam } from './Spam';
+export { default as Trash } from './Trash';
+export { default as Cancel } from './Cancel';
+export { default as Image } from './Image';
+export { default as File } from './File';
+export { default as WriteIcon } from './WriteIcon';

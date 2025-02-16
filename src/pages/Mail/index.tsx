@@ -1,6 +1,5 @@
-import Sidebar from 'pages/Mail/ui/Sidebar';
+import { Sidebar, Content } from 'features/Mail';
 import * as s from './style.css';
-import Content from './ui/Content';
 import { useState } from 'react';
 
 const Mail = () => {
