@@ -2,14 +2,17 @@ import * as s from './style.css';
 import { DropdownCheckIcon } from 'features/Home/ui';
 
 interface DropdownItemProps {
-  item: { value: string; label: string; color?: string };
+  item: { id: number; name: string; color?: string };
   isSelected: boolean;
-  onSelect: (value: string) => void;
+  onSelect: (id: number, name: string) => void;
 }
 
 const DropdownItem = ({ item, isSelected, onSelect }: DropdownItemProps) => {
   return (
-    <div className={s.dropdownItem} onClick={() => onSelect(item.value)}>
+    <div
+      className={s.dropdownItem}
+      onClick={() => onSelect(item.id, item.name)}
+    >
       <DropdownCheckIcon
         style={{ visibility: isSelected ? 'visible' : 'hidden' }}
       />
@@ -19,7 +22,7 @@ const DropdownItem = ({ item, isSelected, onSelect }: DropdownItemProps) => {
           style={{ backgroundColor: item.color }}
         />
       )}
-      <div className={s.dropdownText}>{item.label}</div>
+      <div className={s.dropdownText}>{item.name}</div>
     </div>
   );
 };

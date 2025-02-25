@@ -56,6 +56,7 @@ export const calendarHeaderTodayBtn = style({
   color: theme.black,
   ...font.p1,
   cursor: 'pointer',
+  userSelect: 'none',
 });
 
 export const calendarTitle = style({
