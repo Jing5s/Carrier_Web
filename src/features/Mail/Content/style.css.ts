@@ -42,6 +42,7 @@ export const mailOption_addPlan = style({
   ...font.p1,
   color: theme.blue[500],
   marginRight: '12px',
+  cursor: 'pointer',
 });
 
 export const mailOption_write = style({

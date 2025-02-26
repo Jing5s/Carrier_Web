@@ -1,4 +1,6 @@
+export type MailModalType = 'send' | 'createSchedule';
+
 export interface MailModalProps {
-  modalOpen?: boolean;
-  toggleModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleModalOpen?: (filter: MailModalType) => void;
+  toggleModalClose?: (filter: MailModalType) => void;
 }

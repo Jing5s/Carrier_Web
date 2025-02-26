@@ -2,7 +2,6 @@ import { useMenuState } from 'entities/mail/hooks';
 import { WriteIcon, Trash } from 'features/Mail/ui';
 import * as s from './style.css';
 import { useState } from 'react';
-import SendModal from 'features/Mail/SendModal';
 import { MailModalProps } from 'entities/mail/types/MailModalProps';
 import theme from 'shared/styles/theme.css';
 
@@ -45,7 +44,7 @@ const mailData = [
   },
 ];
 
-const Content = ({ modalOpen, toggleModalOpen }: MailModalProps) => {
+const Content = ({ toggleModalOpen }: MailModalProps) => {
   const { selectedMenu } = useMenuState();
   const [selectedMail, setSelectedMail] = useState(0);
   const selectedMailData = mailData.find((mail) => mail.id === selectedMail);
@@ -58,11 +57,18 @@ const Content = ({ modalOpen, toggleModalOpen }: MailModalProps) => {
         </div>
 
         <div className={s.mailOption}>
-          <div className={s.mailOption_addPlan}>일정으로 추가</div>
+          <div
+            className={s.mailOption_addPlan}
+            onClick={() => {
+              toggleModalOpen?.('createSchedule');
+            }}
+          >
+            일정으로 추가
+          </div>
           <div
             className={s.mailOption_write}
             onClick={() => {
-              toggleModalOpen?.(true);
+              toggleModalOpen?.('send');
             }}
           >
             <WriteIcon />
@@ -81,6 +87,7 @@ const Content = ({ modalOpen, toggleModalOpen }: MailModalProps) => {
                 selectedMail === data.id ? s.mailList_container_selected : ''
               }`}
               onClick={() => setSelectedMail(data.id)}
+              key={data.id}
             >
               {data.read ? '' : <div className={s.mailList_readState} />}
               <div className={s.mailList_header}>
@@ -130,7 +137,6 @@ const Content = ({ modalOpen, toggleModalOpen }: MailModalProps) => {
             </>
           )}
         </div>
-        {modalOpen && <SendModal toggleModalOpen={toggleModalOpen} />}
       </main>
     </div>
   );

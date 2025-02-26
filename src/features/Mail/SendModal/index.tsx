@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useState } from 'react';
 import { MailModalProps } from 'entities/mail/types/MailModalProps';
 
-const SendModal = ({ toggleModalOpen }: MailModalProps) => {
+const SendModal = ({ toggleModalClose }: MailModalProps) => {
   const [content, setContent] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<File[] | null>(null);
 
@@ -33,7 +33,7 @@ const SendModal = ({ toggleModalOpen }: MailModalProps) => {
       <header className={s.header}>
         <button
           onClick={() => {
-            toggleModalOpen?.(false);
+            toggleModalClose?.('send');
           }}
         >
           <Cancel />

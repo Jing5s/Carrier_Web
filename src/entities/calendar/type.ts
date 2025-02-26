@@ -53,8 +53,8 @@ export interface CalendarEvent {
   title: string;
   start: string;
   end: string;
-  startEditable: boolean;
-  durationEditable: boolean;
+  startEditable?: boolean;
+  durationEditable?: boolean;
   content?: string;
   location?: string;
   repeatCycle?: string;
