@@ -18,6 +18,7 @@ const Login = () => {
       if (url) {
         window.location.href = url;
       } else {
+        /* eslint-disable no-console */
         console.error('로그인 링크를 찾을 수 없습니다.');
       }
     } catch (error) {

@@ -6,6 +6,7 @@ import {
   ScheduleCategory,
   TodoPriority,
 } from 'entities/calendar/type';
+import { useCreateTodoMutation } from 'features/Home/services/Home.mutation';
 
 interface CalendarModalProps {
   onClose: () => void;
@@ -16,9 +17,6 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
   const { state, updateState, switchEventType, isInitial } = useEventState({
     event,
   });
-
-  const handleChangeRepeat = (value: string) =>
-    updateState({ selectedRepeat: value });
 
   const handleChangeCategory = (value: string) =>
     updateState({
@@ -34,6 +32,24 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
     updateState({
       isAllDay: !state.isAllDay,
     });
+
+  const { mutate } = useCreateTodoMutation();
+
+  const onSubmit = () => {
+    const currentDate = new Date(event?.start || '');
+    currentDate.setDate(currentDate.getDate() + 1);
+    const modifiedDate = currentDate.toISOString();
+
+    mutate({
+      title: state.title,
+      date: modifiedDate,
+      isRepeat: state.selectedRepeat !== 'NONE',
+      priority: state.selectedPriority || 'MEDIUM',
+      memo: state.content,
+      location: state.location,
+    });
+    window.location.reload();
+  };
 
   return (
     <div className={s.calendarModalOverlay} onClick={onClose}>
@@ -66,13 +82,13 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
             className={s.calendarModalTitle}
             placeholder="새 일정"
             value={state.title}
-            onChange={(e) => handleChangeRepeat(e.target.value)}
+            onChange={(e) => updateState({ title: e.target.value })}
           />
           <input
             className={s.calendarModalSubTitle}
             placeholder="메모"
             value={state.content}
-            onChange={(e) => handleChangeRepeat(e.target.value)}
+            onChange={(e) => updateState({ content: e.target.value })}
           />
         </div>
 
@@ -108,7 +124,7 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
               </>
             )}
 
-          <div className={s.calendarModalItem}>
+          {/* <div className={s.calendarModalItem}>
             <div className={s.calendarModalItemTitle}>반복</div>
             <Dropdown
               name="repeat"
@@ -134,7 +150,7 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
               }
               onChange={handleChangeRepeat}
             />
-          </div>
+          </div> */}
 
           {state.eventType === 'Schedule' ? (
             <div className={s.calendarModalItem}>
@@ -158,7 +174,7 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
                 value={state.selectedPriority}
                 data={[
                   { value: 'LOW', label: '낮음' },
-                  { value: 'MIDDLE', label: '중간' },
+                  { value: 'MEDIUM', label: '중간' },
                   { value: 'HIGH', label: '높음' },
                 ]}
                 onChange={handleChangePriority}
@@ -172,7 +188,7 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
         </div>
 
         {isInitial ? (
-          <div className={s.calendarModalCreateBtn}>
+          <div className={s.calendarModalCreateBtn} onClick={onSubmit}>
             <div className={s.calendarModalCreateBtnText}>생성</div>
           </div>
         ) : (
