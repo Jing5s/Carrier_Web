@@ -32,3 +32,11 @@ customAxios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+customAxios.interceptors.request.use((config) => {
+  const token = Storage.getItem(TOKEN.ACCESS);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});

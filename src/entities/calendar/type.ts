@@ -42,7 +42,7 @@ export type TodoRepeat = (typeof TODO_REPEAT)[keyof typeof TODO_REPEAT];
 
 export const TODO_PRIORITY = {
   LOW: 'LOW',
-  MIDDLE: 'MIDDLE',
+  MIDDLE: 'MEDIUM',
   HIGH: 'HIGH',
 } as const;
 

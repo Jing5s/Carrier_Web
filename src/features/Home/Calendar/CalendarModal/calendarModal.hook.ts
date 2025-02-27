@@ -54,7 +54,7 @@ const useEventState = ({ event }: UseEventStateProps) => {
               selectedPriority: undefined,
             }
           : {
-              selectedPriority: 'MIDDLE',
+              selectedPriority: 'MEDIUM',
               selectedCategory: undefined,
               isAllDay: false,
             }),

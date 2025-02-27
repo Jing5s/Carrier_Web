@@ -25,6 +25,7 @@ export const TodoListTitle = style({
   color: theme.gray[600],
   fontFamily: 'Pretendard',
   ...font.H5,
+  userSelect: 'none',
 });
 
 export const TodoListSetDate = style({
@@ -38,6 +39,7 @@ export const TodoListDateTitle = style({
   color: theme.gray[600],
   fontFamily: 'Pretendard',
   ...font.p2,
+  userSelect: 'none',
 });
 
 export const TodoListMain = style({
@@ -45,7 +47,7 @@ export const TodoListMain = style({
   paddingLeft: '8px',
   flexDirection: 'column',
   alignItems: 'flex-start',
-  gap: '2px',
+  gap: '8px',
 });
 
 export const TodoListItem = style({

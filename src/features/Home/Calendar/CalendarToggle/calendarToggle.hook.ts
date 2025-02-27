@@ -25,7 +25,7 @@ const useCreateNewEvent = () => {
           ...commonFields,
           type,
           durationEditable: false,
-          priority: 'MIDDLE',
+          priority: 'MEDIUM',
         } as Todo;
       }
     },

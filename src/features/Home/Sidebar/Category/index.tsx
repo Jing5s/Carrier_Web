@@ -1,7 +1,31 @@
+import { useEffect, useState } from 'react';
 import * as s from './style.css';
 import { CategoryPlusIcon, CategoryItemIcon } from 'features/Home/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { categoryQuery } from 'features/Home/services/Home.query';
+
+/* eslint-disable no-console */
 
 const Category = () => {
+  const queryClient = useQueryClient();
+  const [categoryDate, setCategoryDate] = useState<
+    { id: number; name: string; color: string }[]
+  >([]);
+
+  useEffect(() => {
+    try {
+      const fetchCategory = async () => {
+        const data = await queryClient.fetchQuery(
+          categoryQuery.getCategories()
+        );
+        setCategoryDate(data);
+      };
+      fetchCategory();
+    } catch (error) {
+      console.error('에러 발생:', error);
+    }
+  }, [queryClient]);
+
   return (
     <div className={s.CategoryContainer}>
       <div className={s.CategoryHeader}>
@@ -11,22 +35,14 @@ const Category = () => {
         </div>
       </div>
       <div className={s.CategoryItemContainer}>
-        <div className={s.CategoryItem}>
-          <CategoryItemIcon />
-          <div className={s.CategoryItemTitle}>나의 일정</div>
-        </div>
-        <div className={s.CategoryItem}>
-          <CategoryItemIcon initialBgColor="#15A665" />
-          <div className={s.CategoryItemTitle}>게임</div>
-        </div>
-        <div className={s.CategoryItem}>
-          <CategoryItemIcon initialBgColor="#F4B224" />
-          <div className={s.CategoryItemTitle}>카테고리</div>
-        </div>
-        <div className={s.CategoryItem}>
-          <button className={s.BtnCategoryItemStatic} />
-          <div className={s.CategoryItemTitle}>대한민국 공휴일</div>
-        </div>
+        {categoryDate?.map(
+          (category: { id: number; name: string; color: string }) => (
+            <div className={s.CategoryItem} key={category.id}>
+              <CategoryItemIcon initialBgColor={category.color} />
+              <div className={s.CategoryItemTitle}>{category.name}</div>
+            </div>
+          )
+        )}
       </div>
     </div>
   );
