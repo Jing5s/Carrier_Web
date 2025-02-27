@@ -1,15 +1,12 @@
 import { MailModalProps } from 'entities/mail/types/MailModalProps';
 import * as s from './style.css';
 import AlertMark from 'features/Mail/ui/AlertMark';
-import {
-  CalendarEvent,
-  ScheduleCategory,
-  TodoPriority,
-} from 'entities/calendar/type';
+import { CalendarEvent } from 'entities/calendar/type';
 import useEventState from 'features/Home/Calendar/CalendarModal/calendarModal.hook';
 import EventDropdown from 'features/Home/Calendar/Dropdown';
 import { useState } from 'react';
 import LoadingStatus from 'features/Mail/CreateScheduleModal/LoadingStatus';
+import { categorys } from 'entities/calendar/model';
 
 const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
   const [isLoading] = useState(true);
@@ -18,12 +15,14 @@ const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
     title: 'AI 일정 제목',
     start: '2025-02-09T14:00:00',
     end: '2025-02-12T14:00:00',
-    content: 'AI 일정 내용',
+    memo: 'AI 일정 내용',
     location: 'AI 일정 위치',
-    repeatCycle: '매주',
-    category: '나의 일정',
+    isRepeat: false,
+    category: 1,
     allDay: false,
-    priority: '낮음',
+    priority: 1,
+    startEditable: true,
+    durationEditable: true,
   });
 
   const { state, updateState } = useEventState({ event });
@@ -32,18 +31,14 @@ const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
     updateState({ [key]: value });
   };
 
-  const handleChangeRepeat = (value: string) =>
-    updateState({ selectedRepeat: value });
+  const handleChangeRepeat = (id: number) =>
+    updateState({ selectedRepeatId: id });
 
-  const handleChangeCategory = (value: string) =>
-    updateState({
-      selectedCategory: value as ScheduleCategory,
-    });
+  const handleChangeCategory = (id: number) =>
+    updateState({ selectedCategoryId: id });
 
-  const handleChangePriority = (value: string) =>
-    updateState({
-      selectedPriority: value as TodoPriority,
-    });
+  const handleChangePriority = (id: number) =>
+    updateState({ selectedPriorityId: id });
 
   const handleIsAllday = () =>
     updateState({
@@ -71,7 +66,7 @@ const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
               <input
                 className={s.calendarModalSubTitle}
                 placeholder="메모"
-                value={state.content}
+                value={state.memo}
                 onChange={(e) => handleChangeInputs('content', e.target.value)}
               />
             </div>
@@ -112,24 +107,24 @@ const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
                 <div className={s.calendarModalItemTitle}>반복</div>
                 <EventDropdown
                   name="repeat"
-                  value={state.selectedRepeat}
+                  id={state.selectedRepeatId}
                   data={
                     state.eventType === 'Schedule'
                       ? [
-                          { value: 'NONE', label: '없음' },
-                          { value: 'DAILY', label: '매일' },
-                          { value: 'WEEKDAYS', label: '매주' },
-                          { value: 'WEEKENDS', label: '매달' },
+                          { id: 1, value: 'NONE', name: '없음' },
+                          { id: 2, value: 'DAILY', name: '매일' },
+                          { id: 3, value: 'WEEKLY', name: '매주' },
+                          { id: 4, value: 'MONTHLY', name: '매달' },
                         ]
                       : [
-                          { value: 'NONE', label: '없음' },
-                          { value: 'DAILY', label: '매일' },
-                          { value: 'WEEKLY', label: '매주' },
-                          { value: 'BIWEEKLY', label: '격주' },
-                          { value: 'MONTHLY', label: '매달' },
-                          { value: 'QUARTERLY', label: '분기' },
-                          { value: 'SEMIANNUALLY', label: '반기' },
-                          { value: 'ANNUALLY', label: '매년' },
+                          { id: 1, value: 'NONE', name: '없음' },
+                          { id: 2, value: 'DAILY', name: '매일' },
+                          { id: 3, value: 'WEEKLY', name: '매주' },
+                          { id: 4, value: 'BIWEEKLY', name: '격주' },
+                          { id: 5, value: 'MONTHLY', name: '매달' },
+                          { id: 6, value: 'QUARTERLY', name: '3개월마다' },
+                          { id: 7, value: 'SEMIANNUALLY', name: '6개월마다' },
+                          { id: 8, value: 'YEARLY', name: '매년' },
                         ]
                   }
                   onChange={handleChangeRepeat}
@@ -141,12 +136,8 @@ const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
                   <div className={s.calendarModalItemTitle}>카테고리</div>
                   <EventDropdown
                     name="category"
-                    value={state.selectedCategory}
-                    data={[
-                      { value: 'FIRST', label: '나의 일정', color: '#3B82F6' },
-                      { value: 'SECOND', label: '게임', color: '#22C55E' },
-                      { value: 'THIRD', label: '공휴일', color: '#EF4444' },
-                    ]}
+                    id={state.selectedCategoryId}
+                    data={categorys}
                     onChange={handleChangeCategory}
                   />
                 </div>
@@ -155,11 +146,11 @@ const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
                   <div className={s.calendarModalItemTitle}>우선순위</div>
                   <EventDropdown
                     name="priority"
-                    value={state.selectedPriority}
+                    id={state.selectedPriorityId}
                     data={[
-                      { value: 'LOW', label: '낮음' },
-                      { value: 'MIDDLE', label: '중간' },
-                      { value: 'HIGH', label: '높음' },
+                      { id: 1, value: 'LOW', name: '낮음' },
+                      { id: 2, value: 'MIDDLE', name: '중간' },
+                      { id: 3, value: 'HIGH', name: '높음' },
                     ]}
                     onChange={handleChangePriority}
                   />

@@ -1,32 +1,32 @@
 import { useCallback } from 'react';
-import { Schedule, Todo } from 'entities/calendar/type';
+import { CalendarEvent } from 'entities/calendar/type';
 
 const useCreateNewEvent = () => {
   const createNewEvent = useCallback(
-    (type: 'Schedule' | 'Todo'): Schedule | Todo => {
+    (type: 'Schedule' | 'Todo'): CalendarEvent => {
       const commonFields = {
         title: '',
         start: new Date().toISOString(),
         end: new Date().toISOString(),
         startEditable: true,
-        repeatCycle: 'NONE',
+        isRepeat: false,
       };
 
       if (type === 'Schedule') {
         return {
           ...commonFields,
-          type,
+          type: 'Schedule',
           durationEditable: true,
           allDay: true,
-          category: 'FIRST',
-        } as Schedule;
+          category: 1,
+        } as CalendarEvent;
       } else {
         return {
           ...commonFields,
-          type,
+          type: 'Todo',
           durationEditable: false,
-          priority: 'MIDDLE',
-        } as Todo;
+          priority: 1,
+        } as CalendarEvent;
       }
     },
     []
