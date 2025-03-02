@@ -43,6 +43,9 @@ importers:
       axios:
         specifier: ^1.7.9
         version: 1.7.9
+      jotai:
+        specifier: ^2.12.1
+        version: 2.12.1(@types/react@18.3.18)(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -4134,6 +4137,18 @@ packages:
         integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==,
       }
     hasBin: true
+
+  jotai@2.12.1:
+    resolution: {integrity: sha512-VUW0nMPYIru5g89tdxwr9ftiVdc/nGV9jvHISN8Ucx+m1vI9dBeHemfqYzEuw5XSkmYjD/MEyApN9k6yrATsZQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   js-tokens@4.0.0:
     resolution:
@@ -9041,6 +9056,11 @@ snapshots:
   javascript-stringify@2.1.0: {}
 
   jiti@2.4.2: {}
+
+  jotai@2.12.1(@types/react@18.3.18)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 18.3.18
+      react: 18.3.1
 
   js-tokens@4.0.0: {}
 

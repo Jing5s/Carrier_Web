@@ -40,6 +40,7 @@
     "@vanilla-extract/recipes": "^0.5.5",
     "@vanilla-extract/vite-plugin": "^4.0.19",
     "axios": "^1.7.9",
+    "jotai": "^2.12.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-quill": "^2.0.0",

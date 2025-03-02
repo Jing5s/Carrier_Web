@@ -1,10 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as s from './style.css';
 import { Alarm, Calendar, Diary, Mail } from 'widgets/NavigationBar/ui';
+import useUser from 'entities/user/hooks/useUser';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useUser();
 
   const menus = [
     {
@@ -37,10 +39,7 @@ const NavigationBar = () => {
         ))}
       </div>
       <div className={s.others}>
-        <img
-          src="https://image.blip.kr/v1/file/32bf28d0434646cb51561a9bcdfbf46d"
-          className={s.profileImg}
-        />
+        <img src={user.picture} className={s.profileImg} alt="프로필 사진" />
         <Alarm />
       </div>
     </nav>

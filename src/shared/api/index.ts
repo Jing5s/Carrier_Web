@@ -9,16 +9,26 @@ export const customAxios = axios.create({
 });
 
 const refresh = async () => {
+  Storage.delItem(TOKEN.ACCESS);
   const { data } = await customAxios.post('/auth/reissue', refreshToken());
-  Storage.setItem(TOKEN.ACCESS, data.accessToken);
-  return data.accessToken;
+  const newAccessToken = data.accessToken;
+  Storage.setItem(TOKEN.ACCESS, newAccessToken);
+  return newAccessToken;
 };
+
+customAxios.interceptors.request.use((config) => {
+  const token = Storage.getItem(TOKEN.ACCESS);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 customAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const request = error.config;
-    request.retryCount = request.retryCount || 0 + 1;
+    request.retryCount = (request.retryCount || 0) + 1;
 
     if (request.retryCount > 3) {
       return Promise.reject(error);
