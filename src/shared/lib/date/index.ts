@@ -14,15 +14,15 @@ export const formatDateToPeriod = (date: Date): string => {
   return `${year}.${month}.${day}`;
 };
 
-export const getNextDate = (dateStr: string): string => {
+export const getNextDate = (dateStr: string, days: number = 1): string => {
   const date = new Date(dateStr.replace(/\./g, '-'));
-  date.setDate(date.getDate() + 1);
+  date.setDate(date.getDate() + days);
   return formatDateToPeriod(date);
 };
 
-export const getPrevDate = (dateStr: string): string => {
+export const getPrevDate = (dateStr: string, days: number = 1): string => {
   const date = new Date(dateStr.replace(/\./g, '-'));
-  date.setDate(date.getDate() - 1);
+  date.setDate(date.getDate() - days);
   return formatDateToPeriod(date);
 };
 
