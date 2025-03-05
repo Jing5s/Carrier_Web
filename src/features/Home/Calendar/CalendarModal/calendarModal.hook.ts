@@ -1,10 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { CalendarEvent } from 'entities/calendar/type';
-import { priority } from 'entities/calendar/model';
-import {
-  usePostScheduleMutation,
-  useCreateTodoMutation,
-} from 'features/Home/services/home.mutation';
+import { usePostScheduleMutation } from 'features/Home/services/home.mutation';
 
 interface UseEventStateProps {
   event?: CalendarEvent;
@@ -36,8 +32,8 @@ const useEventState = ({ event }: UseEventStateProps) => {
     isAllDay: event?.type === 'Schedule' ? event.allDay || false : false,
     location: event?.location || '',
   });
-
   const prevEventRef = useRef<CalendarEvent | undefined>(undefined);
+
   const isInitial = !event || event.title === '';
 
   const updateState = useCallback((updates: Partial<EventState>) => {
@@ -50,12 +46,12 @@ const useEventState = ({ event }: UseEventStateProps) => {
         eventType: type,
         ...(type === 'Schedule'
           ? {
-              selectedCategoryId: 1,
+              selectedCategory: 1,
               isAllDay: true,
-              selectedPriorityId: 1,
+              selectedPriority: 1,
             }
           : {
-              selectedPriorityId: 1,
+              selectedPriority: 1,
               isAllDay: false,
             }),
       });
@@ -72,28 +68,11 @@ const useEventState = ({ event }: UseEventStateProps) => {
     endDate: state.endDate,
     location: state.location,
   };
-
-  const todoData = {
-    title: state.title,
-    date: state.startDate,
-    isRepeat: false,
-    priority:
-      priority.find((item) => item.id === state.selectedPriorityId)?.value ||
-      'LOW',
-    memo: state.memo,
-    location: state.location,
-  };
-
   const { postScheduleMutate } = usePostScheduleMutation(scheduleData);
-  const { mutate: postTodoMutate } = useCreateTodoMutation();
 
   const createEvent = useCallback(() => {
-    if (state.eventType === 'Schedule') {
-      postScheduleMutate();
-    } else if (state.eventType === 'Todo') {
-      postTodoMutate(todoData);
-    }
-  }, [postScheduleMutate, postTodoMutate, state.eventType, todoData]);
+    postScheduleMutate();
+  }, [postScheduleMutate]);
 
   useEffect(() => {
     if (!event) return;

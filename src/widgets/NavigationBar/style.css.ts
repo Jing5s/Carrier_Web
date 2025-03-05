@@ -10,7 +10,6 @@ export const container = style({
   background: theme.gray[900],
   justifyContent: 'space-between',
   alignItems: 'center',
-  position: 'fixed',
 });
 
 export const icons = style({

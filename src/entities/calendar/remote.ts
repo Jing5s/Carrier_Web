@@ -1,6 +1,6 @@
 import { Schedule } from './type';
 
-export interface GetScheduleListReq {
+export interface PostScheduleListReq {
   startDate: string;
   endDate: string;
   categoryIds: number[];

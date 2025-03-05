@@ -2,7 +2,7 @@ import * as s from './style.css';
 import Dropdown from '../Dropdown';
 import useEventState from './calendarModal.hook';
 import { CalendarEvent } from 'entities/calendar/type';
-import { categorys, priority } from 'entities/calendar/model';
+import { categorys } from 'entities/calendar/model';
 
 interface CalendarModalProps {
   onClose: () => void;
@@ -22,9 +22,7 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
     updateState({ selectedCategoryId: id });
 
   const handleChangePriority = (id: number) =>
-    updateState({
-      selectedPriorityId: id,
-    });
+    updateState({ selectedPriorityId: id });
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) =>
     updateState({ title: e.target.value });
@@ -154,7 +152,11 @@ const CalendarModal = ({ onClose, event }: CalendarModalProps) => {
               <Dropdown
                 name="priority"
                 id={state.selectedPriorityId}
-                data={priority}
+                data={[
+                  { id: 1, value: 'LOW', name: '낮음' },
+                  { id: 2, value: 'MIDDLE', name: '중간' },
+                  { id: 3, value: 'HIGH', name: '높음' },
+                ]}
                 onChange={handleChangePriority}
               />
             </div>
