@@ -67,7 +67,7 @@ pipeline {
             steps {
                 sh 'git pull origin main'
                 sh 'pnpm install'
-                sh 'echo VITE_APPLICATION_KEY=$VITE_APPLICATION_KEY > .env'
+                sh 'echo "VITE_APPLICATION_KEY=$VITE_APPLICATION_KEY\nVITE_APPLICATION_REDIRECT=$VITE_APPLICATION_REDIRECT" > .env'
                 sh 'pnpm run build'
                 sh 'sudo cp -r out/renderer/* /home/jamkris/Documents/web/Carrier'
                 sh 'sudo systemctl restart nginx'

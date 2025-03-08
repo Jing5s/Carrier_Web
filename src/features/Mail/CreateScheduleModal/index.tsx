@@ -4,19 +4,27 @@ import AlertMark from 'features/Mail/ui/AlertMark';
 import { CalendarEvent } from 'entities/calendar/type';
 import useEventState from 'features/Home/Calendar/CalendarModal/calendarModal.hook';
 import EventDropdown from 'features/Home/Calendar/Dropdown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoadingStatus from 'features/Mail/CreateScheduleModal/LoadingStatus';
 import { categorys } from 'entities/calendar/model';
+import { useAtom } from 'jotai';
+import { selectedMailIdAtom } from 'features/Mail/contexts/mail';
+import { useQuery } from '@tanstack/react-query';
+import { mailQuery } from 'features/Mail/services/mail.query';
 
 const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
-  const [isLoading] = useState(true);
-  const [event] = useState<CalendarEvent>({
+  const [gmailId] = useAtom(selectedMailIdAtom);
+  const { data: mailToScheduleData, isLoading } = useQuery({
+    ...mailQuery.mailToSchedule(gmailId ?? ''),
+    enabled: !!gmailId,
+  });
+  const [event, setEvent] = useState<CalendarEvent>({
     type: 'Schedule',
-    title: 'AI 일정 제목',
-    start: '2025-02-09T14:00:00',
-    end: '2025-02-12T14:00:00',
-    memo: 'AI 일정 내용',
-    location: 'AI 일정 위치',
+    title: '',
+    start: '',
+    end: '',
+    memo: '',
+    location: '',
     isRepeat: false,
     category: 1,
     allDay: false,
@@ -24,6 +32,18 @@ const CreateScheduleModal = ({ toggleModalClose }: MailModalProps) => {
     startEditable: true,
     durationEditable: true,
   });
+
+  useEffect(() => {
+    if (mailToScheduleData) {
+      setEvent((prev) => ({
+        ...prev,
+        title: mailToScheduleData?.title ?? prev.title,
+        allDay: mailToScheduleData?.allDay ?? prev.allDay,
+        start: mailToScheduleData?.startDate ?? prev.start,
+        end: mailToScheduleData?.endDate ?? prev.end,
+      }));
+    }
+  }, [mailToScheduleData]);
 
   const { state, updateState } = useEventState({ event });
 

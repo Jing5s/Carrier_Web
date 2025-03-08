@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import theme from '../../shared/styles/theme.css';
+import { font } from 'shared/styles/font.css';
 
 export const container = style({
   display: 'flex',
@@ -13,7 +14,7 @@ export const container = style({
   position: 'fixed',
 });
 
-export const icons = style({
+export const menus = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '40px',
@@ -22,6 +23,7 @@ export const icons = style({
 export const icon = style({
   cursor: 'pointer',
   display: 'flex',
+  flexDirection: 'column',
   padding: '12px',
   justifyContent: 'center',
   alignItems: 'center',
@@ -36,6 +38,11 @@ export const icon = style({
 
 export const active = style({
   background: theme.gray[800],
+});
+
+export const label = style({
+  ...font.caption,
+  color: `${theme.white}`,
 });
 
 export const others = style({

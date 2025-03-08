@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import 'shared/styles/global.css';
 import App from 'app/App';
-import ReactQueryProviders from 'app/providers/react-query-provider';
+import ReactQueryProviders from 'app/providers/ReactQueryProviders';
 
 const isElectron = window.navigator.userAgent
   .toLowerCase()

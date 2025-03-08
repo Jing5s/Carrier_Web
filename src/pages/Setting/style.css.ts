@@ -60,6 +60,7 @@ export const button = recipe({
     type: {
       disabled: {
         backgroundColor: `${theme.blue[100]}`,
+        cursor: 'not-allowed',
       },
       enabled: {
         backgroundColor: `${theme.blue[500]}`,

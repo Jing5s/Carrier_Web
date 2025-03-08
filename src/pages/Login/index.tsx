@@ -16,7 +16,7 @@ const Login = () => {
     try {
       const url = await queryClient.fetchQuery(authQuery.loginLink());
       if (url) {
-        window.location.href = url;
+        window.location.href = `${url}${import.meta.env.VITE_APPLICATION_REDIRECT}`;
       } else {
         /* eslint-disable no-console */
         console.error('로그인 링크를 찾을 수 없습니다.');

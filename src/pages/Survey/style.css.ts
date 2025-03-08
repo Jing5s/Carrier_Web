@@ -38,6 +38,7 @@ export const skipButton = style({
   alignItems: 'center',
   gap: '4px',
   marginBottom: '16px',
+  cursor: 'pointer',
 });
 
 export const title = style({

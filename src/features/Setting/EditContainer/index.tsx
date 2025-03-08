@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import * as s from './style.css';
 import PencilIcon from 'pages/Setting/ui/PencilIcon';
 import TimePicker from 'shared/components/TimePicker';
@@ -8,6 +8,7 @@ interface InputContainerProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
+  readOnly: boolean;
 }
 
 const InputContainer = ({
@@ -15,6 +16,7 @@ const InputContainer = ({
   value,
   onChange,
   placeholder,
+  readOnly,
 }: InputContainerProps) => {
   return (
     <div className={s.inputContainer}>
@@ -25,6 +27,7 @@ const InputContainer = ({
         onChange={onChange}
         placeholder={placeholder}
         className={s.input}
+        readOnly={readOnly}
       />
     </div>
   );
@@ -32,17 +35,29 @@ const InputContainer = ({
 
 interface EditContainerProps {
   toggleModal: () => void;
+  userInfos: {
+    name: string;
+    email: string;
+    profileImage: string;
+    notificationTime: string;
+  };
+  setUserInfos: (userInfos: {
+    name: string;
+    email: string;
+    profileImage: string;
+    notificationTime: string;
+  }) => void;
+  time: string[];
+  setTime: (time: string[]) => void;
 }
 
-const EditContainer = ({ toggleModal }: EditContainerProps) => {
-  const [userInfos, setUserInfos] = useState({
-    name: '백지헌',
-    email: 'baekjiheonni@gmail.com',
-    profileImage:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-GpCMZ_ZhcWCTwy9HAghgSktZHSlXI0gfdQ&s',
-  });
-  const [time, setTime] = useState(['', '', '', '']);
-
+const EditContainer = ({
+  toggleModal,
+  userInfos,
+  setUserInfos,
+  time,
+  setTime,
+}: EditContainerProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleInfoChange =
@@ -86,12 +101,14 @@ const EditContainer = ({ toggleModal }: EditContainerProps) => {
               value={userInfos.name}
               onChange={handleInfoChange('name')}
               placeholder="이름을 입력하세요"
+              readOnly={false}
             />
             <InputContainer
               label="이메일"
               value={userInfos.email}
               onChange={handleInfoChange('email')}
               placeholder="이메일을 입력하세요"
+              readOnly={true}
             />
           </div>
           <div

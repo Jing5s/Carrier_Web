@@ -1,7 +1,7 @@
 import * as s from './style.css';
 import { Arrow } from 'shared/icons';
-import { Business, Recieved, Save, Sent, Spam, Trash } from 'features/Mail/ui';
-import { useMenuState } from 'entities/mail/hooks';
+import { Business, Recieved, Save, Sent, Trash } from 'features/Mail/ui';
+import { useMenuState } from 'features/Mail/hooks';
 import theme from 'shared/styles/theme.css';
 import { MENU_TITLES } from 'entities/mail/constants/SidebarMenuTitle';
 
@@ -20,10 +20,7 @@ const Sidebar = () => {
     },
   ];
 
-  const subMenu = [
-    { title: MENU_TITLES.BUSINESS, icon: <Business /> },
-    { title: MENU_TITLES.SPAM, icon: <Spam /> },
-  ];
+  const subMenu = [{ title: MENU_TITLES.BUSINESS, icon: <Business /> }];
 
   return (
     <aside className={s.container}>

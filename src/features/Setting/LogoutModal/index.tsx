@@ -1,6 +1,13 @@
+import { useLogoutMutation } from 'features/auth/services/auth.mutation';
 import * as s from './style.css';
 
-const LogoutModal = () => {
+interface LogoutModalProps {
+  toggleCloseModal: () => void;
+}
+
+const LogoutModal = ({ toggleCloseModal }: LogoutModalProps) => {
+  const { mutate: logoutMutate } = useLogoutMutation();
+
   return (
     <div className={s.container}>
       <div className={s.modalContent}>
@@ -9,8 +16,18 @@ const LogoutModal = () => {
           나가시겠습니까?
         </p>
         <div className={s.buttons}>
-          <div className={s.button({ type: 'cancel' })}>취소</div>
-          <div className={s.button({ type: 'leave' })}>나가기</div>
+          <div
+            className={s.button({ type: 'cancel' })}
+            onClick={toggleCloseModal}
+          >
+            취소
+          </div>
+          <div
+            className={s.button({ type: 'leave' })}
+            onClick={() => logoutMutate()}
+          >
+            나가기
+          </div>
         </div>
       </div>
     </div>

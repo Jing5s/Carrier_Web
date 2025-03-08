@@ -5,6 +5,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCreateCategoryMutation } from 'features/Home/services/home.mutation';
 import { categoryQuery } from 'features/Home/services/home.query';
 
+/* eslint-disable no-console */
+
 const CategoryColor = ['RED', 'GREEN', 'BLUE', 'PURPLE', 'BROWN', 'ROSE'];
 
 const Category = () => {
