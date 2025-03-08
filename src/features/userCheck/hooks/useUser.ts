@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import { IUser } from 'entities/user/types';
 import { userContext } from 'entities/user/contexts/user';
 import { useAtom } from 'jotai';
-import { getUserInfo } from 'entities/user/services/user.api';
-import { userKeys } from 'entities/user/services/user.keys';
+import { getUserInfo } from 'features/userCheck/services/user.api';
+import { userKeys } from 'features/userCheck/services/user.keys';
 
 const useUser = () => {
   const [user, setUser] = useAtom(userContext);

@@ -22,8 +22,8 @@ export interface CalendarEvent {
   allDay?: boolean;
   category?: number;
   priority?: number;
-  startEditable: boolean;
-  durationEditable: boolean;
+  startEditable?: boolean;
+  durationEditable?: boolean;
 }
 
 export interface Schedule {

@@ -7,6 +7,9 @@ export const getLoginLink = async () => {
 };
 
 export const postLogin = async (code: string) => {
-  const { data } = await customAxios.post('/auth', { token: code });
+  const { data } = await customAxios.post('/auth', {
+    token: code,
+    redirectUrl: import.meta.env.VITE_APPLICATION_REDIRECT,
+  });
   return data;
 };

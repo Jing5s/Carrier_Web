@@ -5,7 +5,7 @@ import theme from 'shared/styles/theme.css';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  width: 'calc(100vw - 360px)',
+  width: 'calc(100% - 280px)',
   height: '100vh',
 });
 
@@ -38,14 +38,16 @@ export const mailOption = style({
   gap: '12px',
 });
 
-export const mailOption_addPlan = style({
+export const mailOption_textButton = style({
   ...font.p1,
   color: theme.blue[500],
-  marginRight: '12px',
   cursor: 'pointer',
+  padding: '8px 16px',
+  border: `1px solid ${theme.blue[500]}`,
+  borderRadius: '8px',
 });
 
-export const mailOption_write = style({
+export const mailOption_iconButton = style({
   width: '48px',
   height: '48px',
   borderRadius: '8px',
@@ -56,18 +58,7 @@ export const mailOption_write = style({
   ':hover': {
     backgroundColor: theme.gray[50],
   },
-});
-
-export const mailOption_delete = style({
-  width: '48px',
-  height: '48px',
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  ':hover': {
-    backgroundColor: theme.gray[50],
-  },
+  cursor: 'pointer',
 });
 
 export const content = style({
@@ -80,23 +71,28 @@ export const content = style({
 });
 
 export const content_list = style({
-  width: '520px',
+  width: '440px',
   height: 'calc(100vh - 72px)',
   borderRight: `1px solid ${theme.gray[100]}`,
+  overflowY: 'auto',
 });
 
 export const mailList_container = style({
   width: '100%',
-  height: '114px',
+  height: '7rem',
+  maxHeight: '106px',
   position: 'relative',
   padding: '16px 32px',
-  gap: '4px',
   cursor: 'pointer',
 });
 
 export const mailList_container_selected = style({
   backgroundColor: theme.blue[500],
   color: `${theme.white} !important`,
+});
+
+export const mailList_description_selected = style({
+  color: `${theme.blue[100]} !important`,
 });
 
 export const mailList_readState = style({
@@ -121,6 +117,12 @@ export const mailList_header = style({
 export const mailList_Sender = style({
   ...font.H4,
   fontWeight: '700',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 1,
+  width: '70%',
 });
 
 export const mailList_Date = style({
@@ -130,14 +132,19 @@ export const mailList_Date = style({
 
 export const mailList_title = style({
   ...font.p2,
+  width: '100%',
   height: '19px',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 1,
 });
 
 export const mailList_description = style({
   ...font.p2,
   color: theme.gray[500],
   width: '100%',
-  height: '38px',
   display: '-webkit-box',
   overflow: 'hidden',
   whiteSpace: 'normal',
@@ -146,44 +153,90 @@ export const mailList_description = style({
   WebkitLineClamp: 2,
 });
 
-export const content_description = style({
+export const content_detail = style({
   height: 'calc(100vh - 72px)',
+  overflow: 'auto',
   padding: '20px',
   flex: 1,
+  display: 'flex',
+  gap: '`16px',
+  flexDirection: 'column',
 });
 
-export const description_header = style({
+export const detail_header = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '8px',
-  marginBottom: '20px',
+  gap: '16px',
 });
 
-export const description_title = style({
+export const detail_title = style({
   ...font.H2,
   fontWeight: '500',
-  marginBottom: '16px',
 });
 
-export const description_info = style({
+export const detail_info = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
   justifyContent: 'center',
 });
 
-export const description_sender = style({
+export const detail_sender = style({
   ...font.H4,
 });
 
-export const description_Recipient = style({
+export const detail_Recipient = style({
   ...font.p1,
   color: theme.gray[600],
 });
 
-export const description_date = style({
+export const detail_date = style({
   ...font.p2,
   color: theme.gray[500],
 });
 
-export const description_content = style({});
+export const detailContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+});
+
+export const summaryContainer = style({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+});
+
+export const summaryTitle = style({
+  fontSize: '16px',
+  lineHeight: '120%',
+  fontWeight: 600,
+  color: `${theme.blue[500]}`,
+  paddingTop: '8px',
+});
+
+export const summaryDesc = style({
+  ...font.p2,
+  color: `${theme.black}`,
+});
+
+export const hrLine = style({
+  width: '100%',
+  height: '1px',
+  background: '#D8D8D8',
+});
+
+export const mail_body = style({
+  all: 'unset',
+});
+
+export const notSelected = style({
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  ...font.H3,
+  color: `${theme.gray[300]}`,
+});

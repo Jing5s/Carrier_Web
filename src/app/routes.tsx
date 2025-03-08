@@ -6,7 +6,7 @@ import Home from 'pages/Home';
 import Survey from 'pages/Survey';
 import OAuth from 'pages/OAuth';
 import Mail from 'pages/Mail';
-import useUser from 'entities/user/hooks/useUser';
+import useUser from 'features/userCheck/hooks/useUser';
 import { DotLoader } from 'react-spinners';
 import theme from 'shared/styles/theme.css';
 import Setting from 'pages/Setting';
