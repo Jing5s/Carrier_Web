@@ -1,4 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 import { font } from 'shared/styles/font.css';
 import theme from 'shared/styles/theme.css';
 
@@ -121,17 +122,35 @@ export const calendarTodoContainer = style({
   alignItems: 'center',
 });
 
-export const calendarTodoText = style({
-  flex: '1 0 0',
-  ...font.p2,
-  overflow: 'hidden',
-  selectors: {
-    '&::before': {
-      content: '"•"',
-      fontSize: '1.2em',
-      marginRight: '6px',
-      color: theme.black,
+export const calendarTodoText = recipe({
+  base: {
+    flex: '1 0 0',
+    ...font.p2,
+    overflow: 'hidden',
+    position: 'relative',
+    paddingLeft: '0.8em',
+    selectors: {
+      '&::before': {
+        content: '"•"',
+        fontSize: '1.2em',
+        color: theme.black,
+        position: 'absolute',
+        left: 0,
+        top: '50%',
+        transform: 'translateY(-50%)',
+      },
     },
+  },
+  variants: {
+    isDone: {
+      true: {
+        textDecoration: 'line-through',
+      },
+      false: {},
+    },
+  },
+  defaultVariants: {
+    isDone: false,
   },
 });
 

@@ -17,16 +17,21 @@ import { CalendarEvent } from 'entities/calendar/type';
 import * as s from './style.css';
 import './root.css';
 import theme from 'shared/styles/theme.css';
-import { useScheduleListQuery } from 'features/Home/services/home.query';
+import {
+  useScheduleListQuery,
+  useTodoListQuery,
+} from 'features/Home/services/home.query';
 import { useAtom } from 'jotai';
 import {
   scheduleSelectedAtom,
   todoSelectedAtom,
 } from 'entities/calendar/contexts/eventDisplayState';
 import { scheduleRenderingAtom } from 'entities/calendar/contexts/eventRendering';
+import { todoRenderingAtom } from 'entities/calendar/contexts/eventRendering';
 
 const EventContent = memo(({ event }: { event: EventImpl }) => {
   const isSchedule = event.extendedProps.type === 'Schedule';
+  const isDone = event.extendedProps.isDone === true;
   return (
     <div
       className={
@@ -34,7 +39,9 @@ const EventContent = memo(({ event }: { event: EventImpl }) => {
       }
     >
       <span
-        className={isSchedule ? s.calendarScheduleText : s.calendarTodoText}
+        className={
+          isSchedule ? s.calendarScheduleText : s.calendarTodoText({ isDone })
+        }
         style={{ color: isSchedule ? theme.blue[500] : theme.black }}
       >
         {event.title}
@@ -95,27 +102,36 @@ const Calendar = () => {
   const [todoSelected] = useAtom(todoSelectedAtom);
 
   const [scheduleRendering] = useAtom(scheduleRenderingAtom);
-
-  const fetchScheduleList = useCallback(async () => {
-    if (!dateRange) return;
-
-    try {
-      const data = await queryClient.fetchQuery(
-        useScheduleListQuery.getScheduleList({
-          startDate: dateRange.startDate,
-          endDate: dateRange.endDate,
-        })
-      );
-      setEvents(data);
-    } catch (error) {
-      console.error('일정 데이터 가져 오기 실패:', error);
-      setEvents([]);
-    }
-  }, [queryClient, dateRange]);
+  const [todoRendering] = useAtom(todoRenderingAtom);
 
   useEffect(() => {
-    fetchScheduleList();
-  }, [fetchScheduleList, scheduleSelected, scheduleRendering]);
+    const fetchData = async () => {
+      if (!dateRange) return;
+
+      try {
+        const [schedules, todos] = await Promise.all([
+          queryClient.fetchQuery(
+            useScheduleListQuery.getScheduleList({
+              startDate: dateRange.startDate,
+              endDate: dateRange.endDate,
+            })
+          ),
+          queryClient.fetchQuery(
+            useTodoListQuery.getTodoList({
+              startDate: dateRange.startDate.split('T')[0],
+              endDate: dateRange.endDate.split('T')[0],
+            })
+          ),
+        ]);
+
+        setEvents([...schedules, ...todos]);
+      } catch (error) {
+        console.error('데이터 가져오기 실패:', error);
+      }
+    };
+
+    fetchData();
+  }, [queryClient, dateRange, scheduleRendering, todoRendering]);
 
   const filteredEvents = events.filter((event) => {
     if (event.type === 'Schedule' && !scheduleSelected) return false;

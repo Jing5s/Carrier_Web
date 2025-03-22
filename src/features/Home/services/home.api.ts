@@ -5,12 +5,26 @@ import {
   PostScheduleReq,
   PostTodoReq,
 } from 'entities/calendar/remote';
-import { Schedule, EVENT_TYPE } from 'entities/calendar/type';
+import { Schedule, EVENT_TYPE, Todo } from 'entities/calendar/type';
 import { toQueryString } from 'shared/lib/queryString';
 
 export const getTodoList = async (params: GetTodoListReq) => {
-  const { data } = await customAxios.get(`/todos?${toQueryString(params)}`);
-  return data;
+  const { data } = await customAxios.get<Todo[]>(
+    `/todos?${toQueryString(params)}`
+  );
+
+  return data.map(({ id, title, memo, isDone, date }) => ({
+    type: EVENT_TYPE.Todo,
+    todoId: id,
+    title,
+    memo,
+    isRepeat: false,
+    start: `${date}T00:00:00`,
+    end: `${date}T23:59:59`,
+    isDone: isDone,
+    startEditable: true,
+    durationEditable: false,
+  }));
 };
 
 export const postTodo = async (params: PostTodoReq) => {
