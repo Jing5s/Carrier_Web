@@ -6,7 +6,7 @@ import CheckModal from 'features/Setting/CheckModal';
 import useUser from 'features/user/hooks/useUser';
 import {
   useUpdateUserInfo,
-  useUpdateUserPictrue,
+  useUpdateUserPicture,
   useUserSecession,
 } from 'features/user/services/user.mutation';
 import { useAlarmTimeMutation } from 'features/AlaramTime/services/time.mutation';
@@ -23,7 +23,10 @@ const Setting = () => {
 
   const { user } = useUser();
   const { mutate: updateUserInfoMutate } = useUpdateUserInfo();
-  const { mutate: updateUserPictureMutate } = useUpdateUserPictrue();
+  const {
+    mutate: updateUserPictureMutate,
+    isPending: updateUserPicturePending,
+  } = useUpdateUserPicture();
   const { mutate: updateAlarmTimeMutate } = useAlarmTimeMutation();
   const { mutate: deleteSecession } = useUserSecession();
 
@@ -184,6 +187,7 @@ const Setting = () => {
           setUserInfos={setUserInfos}
           time={time}
           setTime={setTime}
+          isPending={updateUserPicturePending}
         />
       </div>
       {isOpenedModal && (

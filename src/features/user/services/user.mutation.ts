@@ -11,7 +11,7 @@ export const useUpdateUserInfo = () => {
   return useMutation({ mutationFn: patchUserInfo });
 };
 
-export const useUpdateUserPictrue = () => {
+export const useUpdateUserPicture = () => {
   return useMutation({ mutationFn: patchUserPicture });
 };
 

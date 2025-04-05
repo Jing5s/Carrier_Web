@@ -76,18 +76,30 @@ export const profileImage = style({
   width: '22.5rem',
   height: '22.5rem',
   borderRadius: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
   color: `${theme.white}`,
   ...font.H4,
   flexDirection: 'column',
-  gap: '8px',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundBlendMode: 'darken',
   backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+export const imageInner = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  gap: '8px',
+});
+
+export const innerText = style({
+  ...font.H4,
+  color: `${theme.white}`,
 });
 
 export const logoutButton = style({

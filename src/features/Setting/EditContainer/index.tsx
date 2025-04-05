@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import * as s from './style.css';
 import PencilIcon from 'pages/Setting/ui/PencilIcon';
 import TimePicker from 'shared/components/TimePicker';
+import { DotLoader } from 'react-spinners';
+import theme from 'shared/styles/theme.css';
 
 interface InputContainerProps {
   label: string;
@@ -50,6 +52,7 @@ interface EditContainerProps {
   }) => void;
   time: string[];
   setTime: (time: string[]) => void;
+  isPending: boolean;
 }
 
 const EditContainer = ({
@@ -58,6 +61,7 @@ const EditContainer = ({
   setUserInfos,
   time,
   setTime,
+  isPending,
 }: EditContainerProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -119,15 +123,24 @@ const EditContainer = ({
             }}
             onClick={triggerFileSelect}
           >
-            <PencilIcon />
-            클릭하여 수정하기
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={handleImageChange}
-              style={{ display: 'none' }}
-            />
+            {isPending ? (
+              <div className={s.imageInner}>
+                <DotLoader color={theme.white} size={60} />
+                <p className={s.innerText}>사진 업로드 중...</p>
+              </div>
+            ) : (
+              <div className={s.imageInner}>
+                <PencilIcon />
+                <p className={s.innerText}>클릭하여 수정하기</p>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={handleImageChange}
+                  style={{ display: 'none' }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
