@@ -65,6 +65,19 @@ export const categoryItemTitle = style({
   color: theme.black,
   fontFamily: 'Pretendard',
   ...font.p1,
+  borderRadius: '5px',
+  padding: '0px 4px',
+  cursor: 'pointer',
+  transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
+  selectors: {
+    '&:hover': {
+      backgroundColor: theme.gray[50],
+    },
+  },
+});
+
+export const categoryItemInput = style({
+  padding: '1px 3px',
 });
 
 export const categoryNewItemInput = style({

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  patchCategory,
+  patchCategoryState,
   patchTodoState,
   postCategory,
   postTodo,
@@ -9,6 +9,7 @@ import {
   deleteSchedule,
   patchTodo,
   deleteTodo,
+  patchCategory,
 } from './home.api';
 import { homeKeys } from './home.keys';
 
@@ -64,11 +65,11 @@ export const useDeleteTodoMutation = () => {
   });
 };
 
-export const usePatchCategoryMutation = () => {
+export const usePatchCategoryStateMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: patchCategory,
+    mutationFn: patchCategoryState,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [homeKeys.SCHEDULE_LIST],
@@ -82,6 +83,19 @@ export const useCreateCategoryMutation = () => {
 
   return useMutation({
     mutationFn: postCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [homeKeys.CATEGORY_LIST],
+      });
+    },
+  });
+};
+
+export const usePatchCategoryMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: patchCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [homeKeys.CATEGORY_LIST],

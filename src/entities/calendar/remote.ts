@@ -21,6 +21,8 @@ export interface GetCategoriesRes {
   active: boolean;
 }
 
+export type PatchCategoriesReq = Omit<GetCategoriesRes, 'active'>;
+
 export type PostScheduleReq = Omit<PatchScheduleReq, 'id'>;
 
 export interface PatchScheduleReq {

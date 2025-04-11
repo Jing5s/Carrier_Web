@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import theme from 'shared/styles/theme.css';
-import { usePatchCategoryMutation } from '../services/home.mutation';
+import { usePatchCategoryStateMutation } from '../services/home.mutation';
 import { CategoryColor } from 'entities/calendar/type';
 import { CATEGORY_COLORS_VALUE } from 'entities/calendar/model';
 
@@ -21,7 +21,7 @@ const BtnCategoryItem = ({
     setIsClicked(!activeState);
   }, [activeState]);
 
-  const { mutate } = usePatchCategoryMutation();
+  const { mutate } = usePatchCategoryStateMutation();
   const handleClick = () => {
     setIsClicked(!isClicked);
     if (id) mutate(id);
